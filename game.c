@@ -297,7 +297,8 @@ void playGame(GameState* g) {
         printf("Init player first\n");
         return;
     }
-    while (1) {
+    int exitFlag = 0;
+    while (!exitFlag) {
         displayMap(g);
         printRoomLegend(g);
         Room* r = g->player->currentRoom;
@@ -407,7 +408,8 @@ void playGame(GameState* g) {
                 break;
             }
             case 6:
-                return;
+                exitFlag = 1;
+                break;
             default:
                 break;
         }
