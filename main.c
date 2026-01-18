@@ -1,3 +1,8 @@
+/******************
+Name: Halel Marmor
+ID: 211560065
+Assignment: ex6
+*******************/
 #include <stdio.h>
 #include <stdlib.h>
 #include "game.h"
