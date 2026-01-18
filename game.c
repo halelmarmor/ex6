@@ -322,10 +322,12 @@ void playGame(GameState* g) {
                 Monster* m = r->monster;
                 while (m->hp > 0 && g->player->hp > 0) {
                     m->hp -= g->player->baseAttack;
-                    printf("You deal %d damage. Monster HP: %d\n", g->player->baseAttack, m->hp);
+                    int displayHp = (m->hp < 0)? 0 : m->hp;
+                    printf("You deal %d damage. Monster HP: %d\n", g->player->baseAttack, displayHp);
                     if (m->hp <= 0) break;
                     g->player->hp -= m->attack;
-                    printf("Monster deals %d damage. Your HP: %d\n", m->attack, g->player->hp);
+                    int displayPlayerHp = (g->player->hp < 0) ? 0 : g->player->hp;
+                    printf("Monster deals %d damage. Your HP: %d\n", m->attack, displayPlayerHp);
                 }
                     if (g->player->hp <= 0) {
                     printf("--- YOU DIED ---\n");
