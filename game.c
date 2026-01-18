@@ -180,12 +180,11 @@ void addRoom(GameState* g) {
         r->y = 0;
         g->rooms = r;
         g->roomCount = 1;
-        printf("Created room 0 at (0,0)\n");
     } else {
     displayMap(g);
     printRoomLegend(g);
-    int baseId = getInt("Attach to room ID: \n");
-    int direction = getInt("Direction (0=Up,1=Down,2=Left,3=Right): \n");
+    int baseId = getInt("Attach to room ID: ");
+    int direction = getInt("Direction (0=Up,1=Down,2=Left,3=Right): ");
     Room* base = findRoomById(g, baseId);
     int newX = base->x;
     int newY = base->y;
@@ -207,7 +206,6 @@ void addRoom(GameState* g) {
         }
     temp->next = r;
     g->roomCount++;
-    printf("Created room %d at (%d,%d)\n", r->id, r->x, r->y);
     }
     int addMonster = getInt("Add monster? (1=Yes, 0=No): ");
     if (addMonster ==1) {
@@ -234,6 +232,7 @@ void addRoom(GameState* g) {
         item->value = itemValue;
         r->item = item;
     }
+    printf("Created room %d at (%d,%d)\n", r->id, r->x, r->y);
 }
 
 void initPlayer(GameState* g) {
