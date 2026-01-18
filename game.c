@@ -179,7 +179,7 @@ void addRoom(GameState* g) {
         r->next = NULL;
         g->rooms = r;
         g->roomCount = 1;
-        int addMonster = getInt("Add monster? (1=Yes, 0=No");
+        int addMonster = getInt("Add monster? (1=Yes, 0=No) ");
         if (addMonster ==1) {
             char* monsterName = getString("Monster name: ");
             int monsterType = getInt("Type (0-4): ");
@@ -193,7 +193,7 @@ void addRoom(GameState* g) {
             m->attack = monsterAttack;
             r->monster = m;
         }
-        int addItem = getInt("Add item? (1=Yes, 0=No: ");
+        int addItem = getInt("Add item? (1=Yes, 0=No): ");
         if (addItem == 1) {
             char* itemName = getString("Item name: ");
             int itemType = getInt("Type (0=Armor, 1=Sword): ");
@@ -235,7 +235,7 @@ void addRoom(GameState* g) {
     r->next = g->rooms;
     g->rooms = r;
     g->roomCount++;
-    int addMonster = getInt("Add monster? (1=Yes, 0=No");
+    int addMonster = getInt("Add monster? (1=Yes, 0=No): ");
     if (addMonster ==1) {
         char* monsterName = getString("Monster name: ");
         int monsterType = getInt("Type (0-4): ");
@@ -249,7 +249,7 @@ void addRoom(GameState* g) {
         m->attack = monsterAttack;
         r->monster = m;
     }
-    int addItem = getInt("Add item? (1=Yes, 0=No: ");
+    int addItem = getInt("Add item? (1=Yes, 0=No): ");
     if (addItem == 1) {
         char* itemName = getString("Item name: ");
         int itemType = getInt("Type (0=Armor, 1=Sword): ");
