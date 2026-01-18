@@ -87,8 +87,9 @@ void printMonster(void* data) {
         case COBRA:
             printf("Cobra");
             break;
+        default: break;
     }
-    printf(", Attack: %d, HP: %d\n", myMonster -> attack, myMonster -> hp);
+    printf(", Attack: %d, HP: %d\n", myMonster -> attack, myMonster -> maxHp);
 }
 
 // Item functions
