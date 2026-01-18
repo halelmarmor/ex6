@@ -168,45 +168,20 @@ void printRoomLegend(GameState *g) {
     printf("===================\n");
 }
 void addRoom(GameState* g) {
+    Room* r = malloc(sizeof(Room));
+    if (r == NULL) return;
+    r->monster = NULL;
+    r->item = NULL;
+    r->next = NULL;
+    r->visited = 0;
     if (g->rooms == NULL) {
-        Room* r = malloc(sizeof(Room));
         r->id = 0;
         r->x = 0;
         r->y = 0;
-        r->visited= 0;
-        r->monster = NULL;
-        r->item = NULL;
-        r->next = NULL;
         g->rooms = r;
         g->roomCount = 1;
-        int addMonster = getInt("Add monster? (1=Yes, 0=No) ");
-        if (addMonster ==1) {
-            char* monsterName = getString("Monster name: ");
-            int monsterType = getInt("Type (0-4): ");
-            int monsterHp = getInt("HP: ");
-            int monsterAttack = getInt("Attack: ");
-            Monster* m = malloc(sizeof(Monster));
-            m->name = monsterName;
-            m->type = monsterType;
-            m->hp = monsterHp;
-            m->maxHp = monsterHp;
-            m->attack = monsterAttack;
-            r->monster = m;
-        }
-        int addItem = getInt("Add item? (1=Yes, 0=No): ");
-        if (addItem == 1) {
-            char* itemName = getString("Item name: ");
-            int itemType = getInt("Type (0=Armor, 1=Sword): ");
-            int itemValue = getInt("Value: ");
-            Item* item = malloc(sizeof(Item));
-            item->name = itemName;
-            item->type = itemType;
-            item->value = itemValue;
-            r->item = item;
-        }
         printf("Created room 0 at (0,0)\n");
-        return;
-    }
+    } else {
     displayMap(g);
     printRoomLegend(g);
     int baseId = getInt("Attach to room ID: \n");
@@ -220,21 +195,20 @@ void addRoom(GameState* g) {
     else if (direction == 3) newX++;
     if (roomExistsAt(g, newX, newY)) {
         printf("Room exists there\n");
+        free(r);
         return;
     }
-    Room* r = malloc(sizeof(Room));
-    if (r == NULL) {
-        return;
-    }
-    r->id = g->roomCount;
-    r->x = newX;
-    r->y = newY;
-    r->visited = 0;
-    r->monster = NULL;
-    r->item = NULL;
-    r->next = g->rooms;
-    g->rooms = r;
+        r->id = g->roomCount;
+        r->x = newX;
+        r->y = newY;
+        Room* temp = g->rooms;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+    temp->next = r;
     g->roomCount++;
+    printf("Created room %d at (%d,%d)\n", r->id, r->x, r->y);
+    }
     int addMonster = getInt("Add monster? (1=Yes, 0=No): ");
     if (addMonster ==1) {
         char* monsterName = getString("Monster name: ");
@@ -260,7 +234,6 @@ void addRoom(GameState* g) {
         item->value = itemValue;
         r->item = item;
     }
-    printf("Created room %d at (%d,%d)\n", r->id, r->x, r->y);
 }
 
 void initPlayer(GameState* g) {
@@ -289,6 +262,7 @@ void initPlayer(GameState* g) {
     p->bag = createBST(compareItems, printItem, freeItem);
     p->defeatedMonsters = createBST(compareMonsters, printMonster, freeMonster);
     p->currentRoom = g->rooms;
+    g->rooms->visited = 1;
     g->player = p;
 }
 
@@ -311,6 +285,7 @@ void playGame(GameState* g) {
         }
         printf("HP: %d/%d\n", g->player->hp, g->player->maxHp);
         int choice = getInt("1.Move 2.Fight 3.Pickup 4.Bag 5.Defeated 6.Quit\n");
+        if (choice == -1) continue;
         switch (choice) {
             case 1: {
                 if (r->monster != NULL) {
@@ -390,7 +365,7 @@ void playGame(GameState* g) {
                     bstPreorder(g->player->bag->root, g->player->bag->print);
                 } else if (order == 2) {
                     bstInorder(g->player->bag->root, g->player->bag->print);
-                } else {
+                } else if (order == 3) {
                     bstPostorder(g->player->bag->root, g->player->bag->print);
                 }
                 break;
@@ -402,7 +377,7 @@ void playGame(GameState* g) {
                     bstPreorder(g->player->defeatedMonsters->root, g->player->defeatedMonsters->print);
                 } else if (order == 2) {
                     bstInorder(g->player->defeatedMonsters->root, g->player->defeatedMonsters->print);
-                } else {
+                } else if (order == 3) {
                     bstPostorder(g->player->defeatedMonsters->root, g->player->defeatedMonsters->print);
                 }
                 break;
