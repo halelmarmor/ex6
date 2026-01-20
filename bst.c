@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "bst.h"
 
+// Allocates and initializes an empty binary search tree
 BST* createBST(int (*cmp)(void*, void*), void (*print)(void*), void (*freeData)(void*)) {
     BST* tree = malloc(sizeof(BST));
     if (tree == NULL) {
@@ -13,7 +14,7 @@ BST* createBST(int (*cmp)(void*, void*), void (*print)(void*), void (*freeData)(
     return tree;
 }
 
-
+// Recursively inserts data into the BST
 BSTNode* bstInsert(BSTNode* root, void* data, int (*cmp)(void*, void*)){
     if (root == NULL) {
         BSTNode* newNode = malloc(sizeof(BSTNode));
@@ -35,6 +36,7 @@ BSTNode* bstInsert(BSTNode* root, void* data, int (*cmp)(void*, void*)){
     return root;
 }
 
+// Find data in BST
 void* bstFind(BSTNode* root, void* data, int (*cmp)(void*, void*)) {
     if (root == NULL) {
         return NULL;

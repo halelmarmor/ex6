@@ -4,6 +4,8 @@
 #include "utils.h"
 #include "game.h"
 
+// Helper functions for reading user input
+
 int getInt(const char* prompt) {
     printf("%s", prompt);
     int num;

@@ -125,6 +125,7 @@ void printItem(void* data){
 }
 
 // Game functions
+//helper functions to AddRoom
 Room* findRoomById(GameState* g, int id) {
     Room* current = g->rooms;
     while (current != NULL) {
@@ -236,6 +237,7 @@ void addRoom(GameState* g) {
     printf("Created room %d at (%d,%d)\n", r->id, r->x, r->y);
 }
 
+// Initializes the player with default values and places them
 void initPlayer(GameState* g) {
     if (g->rooms == NULL) {
         printf("Create rooms first\n");
